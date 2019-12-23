@@ -2,7 +2,7 @@
 
 #include <iostream>
 #define ELFY 5
-
+//malo istotna zmiana
 using namespace std;
 
 class elfiaZygota {
