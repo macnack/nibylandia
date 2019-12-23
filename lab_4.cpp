@@ -1,5 +1,5 @@
 #include <iostream>
-
+//lols
 using namespace std;
 
 class Zwierze
