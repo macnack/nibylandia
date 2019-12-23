@@ -2,6 +2,7 @@
 #include<fstream>
 #include<stdlib.h>
 using namespace std;
+// whats upppp 
 class osoba
 {
 public:
