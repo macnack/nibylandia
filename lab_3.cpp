@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<stdlib.h>
+//hej
 using namespace std;
 // whats upppp 
 class osoba
