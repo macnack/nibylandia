@@ -65,7 +65,11 @@ int main()
     }
     cout << "Podaj liczbe: " << endl;
     cin >> n;
-
+    //dodac wyjatek?
+    if((n < 0)||(n > 1000)){
+        cout << "liczba musi byc z przedziału [0,1000]" << endl;
+        cin >> n;
+    }
     A* tablica = new A[n];
     while (!plik.eof()) {
         getline(plik, tmp);
@@ -79,12 +83,13 @@ int main()
                 i++;
                 pch = strtok(NULL, "\t,; \n");
                 if (i == n) {
+                    plik.close();
                     break;
                 };
             }
         }
     }
+    //wcisnij q lub koniec aby zakonczyc progam
     A::przedstaw();
-    plik.close();
     delete tablica;
 }
