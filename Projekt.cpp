@@ -7,6 +7,8 @@
 /*14. C++ wczytanie n liczb do tablicy z pliku, średnia arytmetyczna, oraz największa liczba
 Program wczytuje od użytkownika liczbę tworzy tablice i wczytuje do niej tyle liczb ile podał w zmiennej n.*/
 using namespace std;
+char* pch;
+ifstream plik;
 
 class A {
 
@@ -14,33 +16,28 @@ class A {
     static double suma, max, rozmiar;
 
 public:
-    //double getliczba() { return liczba; }
+    double getliczba() { return liczba; }
     A() { ; }
     void wyswietl() { cout << liczba; }
-    friend void wczytaj_liczby(A& obiekt);
-    static void przedstaw();
+    friend void wczytaj_liczby(A& obiekt){
+        obiekt.liczba = stod(pch);
+        A::suma += obiekt.liczba;
+        A::rozmiar++;
+    if (A::max < obiekt.liczba)
+        A::max = obiekt.liczba;
+    }
+    static void przedstaw()
+    {
+    cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
+         << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
+    //cout << "Suma wynosi: " << A::suma << endl;
+    }
 };
-ifstream plik;
-char* pch;
+
 double A::suma;
 double A::rozmiar;
 double A::max = 0;
 
-void A::przedstaw()
-{
-    cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
-         << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
-    //cout << "Suma wynosi: " << A::suma << endl;
-}
-void wczytaj_liczby(A& obiekt)
-{
-
-    obiekt.liczba = stod(pch);
-    A::suma += obiekt.liczba;
-    A::rozmiar++;
-    if (A::max < obiekt.liczba)
-        A::max = obiekt.liczba;
-}
 bool wczytaj_plik(string nazwa)
 {
     plik.open(nazwa.c_str());
@@ -50,6 +47,7 @@ bool wczytaj_plik(string nazwa)
     cout << "Wczytano plik: '" << nazwa << "'" << endl;
     return 1;
 }
+
 int main()
 {
     int n = 20, i = 0;
@@ -73,13 +71,13 @@ int main()
         getline(plik, tmp);
         char str[tmp.size() + 1];
         strcpy(str, tmp.c_str());
-        pch = strtok(str, ",; \n");
+        pch = strtok(str, "\t,; \n");
         if (i != n) {
             while (pch != NULL) {
                 wczytaj_liczby(tablica[i]);
                 //cout << tablica[i].getliczba() << endl;
                 i++;
-                pch = strtok(NULL, ",; \n");
+                pch = strtok(NULL, "\t,; \n");
                 if (i == n) {
                     break;
                 };
