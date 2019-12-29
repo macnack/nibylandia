@@ -89,7 +89,7 @@ int main()
             }
         }
     }
-    //wcisnij q lub koniec aby zakonczyc progam
+    //wcisnij q lub koniec aby zakonczyc progam.
     A::przedstaw();
     delete tablica;
 }
