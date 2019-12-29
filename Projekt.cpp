@@ -16,7 +16,7 @@ class A {
     static double suma, max, rozmiar;
 
 public:
-    double getliczba() { return liczba; }
+    //double getliczba() { return liczba; }
     A() { ; }
     void wyswietl() { cout << liczba; }
     friend void wczytaj_liczby(A& obiekt){
