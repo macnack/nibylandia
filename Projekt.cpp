@@ -13,7 +13,8 @@ ifstream plik;
 class A {
 
     double liczba;
-    static double suma, max, rozmiar;
+    static double suma, max;
+    static int rozmiar;
 
 public:
     //double getliczba() { return liczba; }
@@ -32,26 +33,28 @@ public:
          << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
     //cout << "Suma wynosi: " << A::suma << endl;
     }
+    static int getRozmiar(){
+        return rozmiar;
+    }
 };
 
 double A::suma;
-double A::rozmiar;
 double A::max = 0;
+int A::rozmiar;
 
 bool wczytaj_plik(string nazwa)
 {
     plik.open(nazwa.c_str());
     if (plik.good() == 0)
         return 0;
-
     cout << "Wczytano plik: '" << nazwa << "'" << endl;
     return 1;
 }
 
 int main()
 {
-    int n = 20, i = 0;
-    string nazwa = "nazwa_pliku.txt", tmp;
+    int i = 0;
+    string nazwa = "nazwa_pliku.txt";
     cout << "Witaj uzytkowniku! " << endl
          << "Podaj nazwe pliku: " << endl;
     getline(cin, nazwa);
@@ -63,33 +66,48 @@ int main()
             getline(cin,nazwa);
         } while (!wczytaj_plik(nazwa));
     }
+    int n;
     cout << "Podaj liczbe: " << endl;
     cin >> n;
-    //dodac wyjatek?
-    if((n < 0)||(n > 1000)){
-        cout << "liczba musi byc z przedziału [0,1000]" << endl;
+    if( n > 1000){
+        cout << "Rozmiar tablicy przekroczył maksymalna wartosc."
+             << endl;
         cin >> n;
     }
-    A* tablica = new A[n];
+    A *tablica;
+    try
+    {
+        tablica = new A[n];
+    }
+    catch(const std::exception& e)
+    {
+        cout << "Rozmiar tablicy jest ujemny " << endl
+             << e.what() << endl;
+    }
+    
+
+    //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
     while (!plik.eof()) {
+        string tmp;
+        int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
         strcpy(str, tmp.c_str());
         pch = strtok(str, "\t,; \n");
-        if (i != n) {
+        if (x != n) {
             while (pch != NULL) {
-                wczytaj_liczby(tablica[i]);
+                wczytaj_liczby(tablica[x]);
                 //cout << tablica[i].getliczba() << endl;
-                i++;
                 pch = strtok(NULL, "\t,; \n");
-                if (i == n) {
+                if (x == n) {
                     plik.close();
                     break;
                 };
             }
         }
     }
-    //wcisnij q lub koniec aby zakonczyc progam.
+    //dodac wcisnij q lub koniec aby zakonczyc progam.
     A::przedstaw();
     delete tablica;
+    cin.get();
 }

@@ -3,5 +3,6 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "iosfwd": "cpp"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }
