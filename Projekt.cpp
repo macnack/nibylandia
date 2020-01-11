@@ -7,7 +7,6 @@
 /*14. C++ wczytanie n liczb do tablicy z pliku, średnia arytmetyczna, oraz największa liczba
 Program wczytuje od użytkownika liczbę tworzy tablice i wczytuje do niej tyle liczb ile podał w zmiennej n.*/
 using namespace std;
-char* pch;
 class A {
 
     double liczba;
@@ -18,8 +17,8 @@ public:
     //double getliczba() { return liczba; }
     A() { ; }
     void wyswietl() { cout << liczba; }
-    friend void wczytaj_liczby(A& obiekt){
-        obiekt.liczba = stod(pch);
+    friend void wczytaj_liczby(A& obiekt, char* liczba){
+        obiekt.liczba = stod(liczba);
         A::suma += obiekt.liczba;
         A::rozmiar++;
     if (A::max < obiekt.liczba)
@@ -37,7 +36,7 @@ public:
 };
 
 double A::suma;
-double A::max = 0;
+double A::max;
 int A::rozmiar;
 ifstream plik;
 
@@ -55,7 +54,6 @@ void ClearScreen(){
 
 int main()
 {
-    int i = 0;
     string nazwa = "nazwa_pliku.txt";
     cout << "Witaj uzytkowniku! " << endl
          << "Podaj nazwe pliku: " << endl;
@@ -87,10 +85,10 @@ int main()
              << "Rozmiar tablicy jest ujemny " << endl
              << "Error: " << e.what() << endl;
     }
-    ClearScreen();
     //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
     while (!plik.eof()) {
         string tmp;
+        char* pch;
         int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
@@ -98,8 +96,8 @@ int main()
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
-                wczytaj_liczby(tablica[x]);
-                //cout << tablica[i].getliczba() << endl;
+                wczytaj_liczby(tablica[x],pch);
+                //cout << tablica[x].getliczba() << endl;
                 pch = strtok(NULL, "\t,; \n");
                 if (x == n) {
                     plik.close();
@@ -108,7 +106,7 @@ int main()
             }
         }
     }
-    //dodac wcisnij q lub koniec aby zakonczyc progam.
+    ClearScreen();
     A::przedstaw();
     cout << "Zapis do pliku [t/n]" << endl;
     string znak;
