@@ -7,9 +7,6 @@
 /*14. C++ wczytanie n liczb do tablicy z pliku, średnia arytmetyczna, oraz największa liczba
 Program wczytuje od użytkownika liczbę tworzy tablice i wczytuje do niej tyle liczb ile podał w zmiennej n.*/
 using namespace std;
-char* pch;
-ifstream plik;
-
 class A {
 
     double liczba;
@@ -41,6 +38,7 @@ public:
 double A::suma;
 double A::max = 0;
 int A::rozmiar;
+ifstream plik;
 
 bool wczytaj_plik(string nazwa)
 {
@@ -49,6 +47,9 @@ bool wczytaj_plik(string nazwa)
         return 0;
     cout << "Wczytano plik: '" << nazwa << "'" << endl;
     return 1;
+}
+void ClearScreen(){
+    cout << string(100, '\n');
 }
 
 int main()
@@ -81,14 +82,15 @@ int main()
     }
     catch(const std::exception& e)
     {
-        cout << "Rozmiar tablicy jest ujemny " << endl
-             << e.what() << endl;
+        cout << endl
+             << "Rozmiar tablicy jest ujemny " << endl
+             << "Error: " << e.what() << endl;
     }
-    
-
+    ClearScreen();
     //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
     while (!plik.eof()) {
         string tmp;
+        char* pch;
         int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
@@ -108,6 +110,17 @@ int main()
     }
     //dodac wcisnij q lub koniec aby zakonczyc progam.
     A::przedstaw();
-    delete tablica;
-    cin.get();
+    cout << "Zapis do pliku [t/n]" << endl;
+    string znak;
+    cin >> znak;
+    if (znak == "t")
+    {
+        cout << "Zapisuje" << endl;
+        
+        ofstream file ("example.bin", ios::binary);
+        file.write(A::przedstaw());
+    }
+    cout << "Koniec programu." << endl;
+
+    delete[] tablica;
 }
