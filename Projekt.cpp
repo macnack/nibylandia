@@ -3,9 +3,6 @@
 #include <string>
 #include <cstring>
 
-
-/*14. C++ wczytanie n liczb do tablicy z pliku, średnia arytmetyczna, oraz największa liczba
-Program wczytuje od użytkownika liczbę tworzy tablice i wczytuje do niej tyle liczb ile podał w zmiennej n.*/
 using namespace std;
 class A {
 
@@ -17,20 +14,22 @@ public:
     //double getliczba() { return liczba; }
     A() { ; }
     void wyswietl() { cout << liczba; }
-    friend void wczytaj_liczby(A& obiekt, char* liczba){
+    friend void wczytaj_liczby(A& obiekt, char* liczba)
+    {
         obiekt.liczba = stod(liczba);
         A::suma += obiekt.liczba;
         A::rozmiar++;
-    if (A::max < obiekt.liczba)
-        A::max = obiekt.liczba;
+        if (A::max < obiekt.liczba)
+            A::max = obiekt.liczba;
     }
     static void przedstaw()
     {
-    cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
-         << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
-    //cout << "Suma wynosi: " << A::suma << endl;
+        cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
+             << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
+        //cout << "Suma wynosi: " << A::suma << endl;
     }
-    static int getRozmiar(){
+    static int getRozmiar()
+    {
         return rozmiar;
     }
 };
@@ -48,7 +47,8 @@ bool wczytaj_plik(string nazwa)
     cout << "Wczytano plik: '" << nazwa << "'" << endl;
     return 1;
 }
-void ClearScreen(){
+void ClearScreen()
+{
     cout << string(100, '\n');
 }
 
@@ -63,24 +63,22 @@ int main()
             cout << endl
                  << "######################" << endl
                  << "Podaj nazwe ponownie: " << endl;
-            getline(cin,nazwa);
+            getline(cin, nazwa);
         } while (!wczytaj_plik(nazwa));
     }
     int n;
     cout << "Podaj liczbe: " << endl;
     cin >> n;
-    if( n > 1000){
+    if (n > 1000) {
         cout << "Rozmiar tablicy przekroczył maksymalna wartosc."
              << endl;
         cin >> n;
     }
-    A *tablica;
-    try
-    {
+    A* tablica;
+    try {
         tablica = new A[n];
     }
-    catch(const std::exception& e)
-    {
+    catch (const std::exception& e) {
         cout << endl
              << "Rozmiar tablicy jest ujemny " << endl
              << "Error: " << e.what() << endl;
@@ -96,7 +94,7 @@ int main()
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
-                wczytaj_liczby(tablica[x],pch);
+                wczytaj_liczby(tablica[x], pch);
                 //cout << tablica[x].getliczba() << endl;
                 pch = strtok(NULL, "\t,; \n");
                 if (x == n) {
@@ -111,8 +109,7 @@ int main()
     cout << "Zapis do pliku [t/n]" << endl;
     string znak;
     cin >> znak;
-    if (znak == "t")
-    {
+    if (znak == "t") {
         cout << "Zapisuje" << endl;
     }
     cout << "Koniec programu." << endl;
