@@ -71,8 +71,10 @@ int main()
     cin >> n;
     if (n > 1000) {
         cout << "Rozmiar tablicy przekroczył maksymalna wartosc."
-             << endl;
-        cin >> n;
+             << endl << "Program przypisze maksymalna wartosc: "
+             << "1000, aby zatwierdzic wcisnij [enter]" ;
+        cin.ignore();
+        cin.get();
     }
     A* tablica;
     try {
@@ -106,10 +108,10 @@ int main()
     }
     ClearScreen();
     A::przedstaw();
-    cout << "Zapis do pliku [t/n]" << endl;
-    string znak;
-    cin >> znak;
-    if (znak == "t") {
+    cout << "Zapis do pliku [t/n] ";
+    cin.ignore();
+    char znak = cin.get();
+    if (znak == 't') {
         cout << "Zapisuje" << endl;
     }
     cout << "Koniec programu." << endl;
