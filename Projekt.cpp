@@ -7,6 +7,7 @@
 /*14. C++ wczytanie n liczb do tablicy z pliku, średnia arytmetyczna, oraz największa liczba
 Program wczytuje od użytkownika liczbę tworzy tablice i wczytuje do niej tyle liczb ile podał w zmiennej n.*/
 using namespace std;
+char* pch;
 class A {
 
     double liczba;
@@ -90,7 +91,6 @@ int main()
     //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
     while (!plik.eof()) {
         string tmp;
-        char* pch;
         int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
@@ -116,9 +116,6 @@ int main()
     if (znak == "t")
     {
         cout << "Zapisuje" << endl;
-        
-        ofstream file ("example.bin", ios::binary);
-        file.write(A::przedstaw());
     }
     cout << "Koniec programu." << endl;
 
