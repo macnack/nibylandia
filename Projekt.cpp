@@ -14,13 +14,12 @@ public:
     //double getliczba() { return liczba; }
     A() { ; }
     void wyswietl() { cout << liczba; }
-    friend void wczytaj_liczby(A& obiekt, char* liczba)
-    {
-        obiekt.liczba = stod(liczba);
-        A::suma += obiekt.liczba;
+    void wczytaj_liczba(char* zmienna){
+        liczba = stod(zmienna);
+        A::suma += liczba;
         A::rozmiar++;
-        if (A::max < obiekt.liczba)
-            A::max = obiekt.liczba;
+        if (A::max < liczba)
+            A::max = liczba;
     }
     static void przedstaw()
     {
@@ -51,9 +50,15 @@ void ClearScreen()
 {
     cout << string(100, '\n');
 }
-
+A* stworz_tab(int &podany_n){
+    if(podany_n>1000){
+        podany_n = 1000;
+    }
+    return new A[podany_n];
+}
 int main()
 {
+    bool Active = true;
     string nazwa = "nazwa_pliku.txt";
     cout << "Witaj uzytkowniku! " << endl
          << "Podaj nazwe pliku: " << endl;
@@ -69,23 +74,18 @@ int main()
     int n;
     cout << "Podaj liczbe: " << endl;
     cin >> n;
-    if (n > 1000) {
-        cout << "Rozmiar tablicy przekroczył maksymalna wartosc."
-             << endl << "Program przypisze maksymalna wartosc: "
-             << "1000, aby zatwierdzic wcisnij [enter]" ;
-        cin.ignore();
-        cin.get();
-    }
     A* tablica;
     try {
-        tablica = new A[n];
+        tablica = stworz_tab(n);
     }
     catch (const std::exception& e) {
         cout << endl
              << "Rozmiar tablicy jest ujemny " << endl
              << "Error: " << e.what() << endl;
+        Active = false;
     }
     //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
+    if(Active == true){
     while (!plik.eof()) {
         string tmp;
         char* pch;
@@ -96,7 +96,7 @@ int main()
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
-                wczytaj_liczby(tablica[x], pch);
+                tablica[x].wczytaj_liczba(pch);
                 //cout << tablica[x].getliczba() << endl;
                 pch = strtok(NULL, "\t,; \n");
                 if (x == n) {
@@ -105,6 +105,9 @@ int main()
                 };
             }
         }
+
+    }
+    delete[] tablica;
     }
     ClearScreen();
     A::przedstaw();
@@ -115,6 +118,5 @@ int main()
         cout << "Zapisuje" << endl;
     }
     cout << "Koniec programu." << endl;
-
-    delete[] tablica;
+    return 0;
 }
