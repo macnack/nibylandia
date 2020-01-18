@@ -13,7 +13,6 @@ class A {
 public:
     //double getliczba() { return liczba; }
     A() { ; }
-    void wyswietl() { cout << liczba; }
     void wczytaj_liczba(char* zmienna){
         liczba = stod(zmienna);
         A::suma += liczba;
@@ -74,6 +73,7 @@ int main()
     int n;
     cout << "Podaj liczbe: " << endl;
     cin >> n;
+    ClearScreen();
     A* tablica;
     try {
         tablica = stworz_tab(n);
@@ -84,11 +84,10 @@ int main()
              << "Error: " << e.what() << endl;
         Active = false;
     }
-    //https://en.cppreference.com/w/cpp/memory/new/bad_array_new_length
     if(Active == true){
     while (!plik.eof()) {
         string tmp;
-        char* pch;
+        char *pch;
         int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
@@ -108,14 +107,13 @@ int main()
 
     }
     delete[] tablica;
-    }
-    ClearScreen();
     A::przedstaw();
     cout << "Zapis do pliku [t/n] ";
     cin.ignore();
     char znak = cin.get();
     if (znak == 't') {
         cout << "Zapisuje" << endl;
+    }
     }
     cout << "Koniec programu." << endl;
     return 0;
