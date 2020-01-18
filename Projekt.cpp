@@ -11,7 +11,7 @@ class A {
     static int rozmiar;
 
 public:
-    //double getliczba() { return liczba; }
+    double getliczba() { return liczba; }
     A() { ; }
     void wczytaj_liczba(char* zmienna){
         liczba = stod(zmienna);
@@ -92,13 +92,14 @@ int main()
         getline(plik, tmp);
         char str[tmp.size() + 1];
         strcpy(str, tmp.c_str());
-        //A *aktualny_rekord;
-        //aktualny_rekord = &tablica[0];
+        A *aktualny_rekord;
+        aktualny_rekord = &tablica[0];
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
-                tablica[x].wczytaj_liczba(pch);
-                //cout << tablica[x].getliczba() << endl;
+                aktualny_rekord->wczytaj_liczba(pch);
+                aktualny_rekord++;
+                //cout << aktualny_rekord->getliczba() << endl;
                 pch = strtok(NULL, "\t,; \n");
                 if (x == n) {
                     plik.close();
