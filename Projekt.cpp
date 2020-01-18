@@ -58,10 +58,10 @@ A* stworz_tab(int &podany_n){
 int main()
 {
     bool Active = true;
-    string nazwa = "nazwa_pliku.txt";
+    string nazwa = "xyz.txt";
     cout << "Witaj uzytkowniku! " << endl
          << "Podaj nazwe pliku: " << endl;
-    getline(cin, nazwa);
+    //getline(cin, nazwa);
     if (!wczytaj_plik(nazwa)) {
         do {
             cout << endl
@@ -70,9 +70,9 @@ int main()
             getline(cin, nazwa);
         } while (!wczytaj_plik(nazwa));
     }
-    int n;
+    int n=20;
     cout << "Podaj liczbe: " << endl;
-    cin >> n;
+    //cin >> n;
     ClearScreen();
     A* tablica;
     try {
@@ -85,6 +85,8 @@ int main()
         Active = false;
     }
     if(Active == true){
+    A *aktualny_rekord;
+    aktualny_rekord = &tablica[0];
     while (!plik.eof()) {
         string tmp;
         char* pch;
@@ -92,14 +94,14 @@ int main()
         getline(plik, tmp);
         char str[tmp.size() + 1];
         strcpy(str, tmp.c_str());
-        A *aktualny_rekord;
-        aktualny_rekord = &tablica[0];
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
                 aktualny_rekord->wczytaj_liczba(pch);
+                cout << aktualny_rekord->getliczba() << endl;
                 aktualny_rekord++;
-                //cout << aktualny_rekord->getliczba() << endl;
+                //tablica[x].wczytaj_liczba(pch);
+                //cout << tablica[x].getliczba() << endl;
                 pch = strtok(NULL, "\t,; \n");
                 if (x == n) {
                     plik.close();
@@ -109,14 +111,22 @@ int main()
         }
 
     }
-    delete[] tablica;
     A::przedstaw();
     cout << "Zapis do pliku [t/n] ";
     cin.ignore();
-    char znak = cin.get();
+    char znak ='t';//= cin.get();
     if (znak == 't') {
         cout << "Zapisuje" << endl;
+        int i =0;
+        while(i != n){
+            cout << endl;
+            for(int j=0;j<5;j++){
+                cout << tablica[i].getliczba() << " ";
+                i++;
+            }
+        }     
     }
+    delete[] tablica;
     }
     cout << "Koniec programu." << endl;
     return 0;
