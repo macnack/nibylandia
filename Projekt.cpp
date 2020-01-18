@@ -87,11 +87,13 @@ int main()
     if(Active == true){
     while (!plik.eof()) {
         string tmp;
-        char *pch;
+        char* pch;
         int x = A::getRozmiar();
         getline(plik, tmp);
         char str[tmp.size() + 1];
         strcpy(str, tmp.c_str());
+        //A *aktualny_rekord;
+        //aktualny_rekord = &tablica[0];
         pch = strtok(str, "\t,; \n");
         if (x != n) {
             while (pch != NULL) {
