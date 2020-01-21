@@ -52,9 +52,34 @@ void ClearScreen()
 A* stworz_tab(int &podany_n){
     if(podany_n>1000){
         podany_n = 1000;
+        cout << "Przekroczono maksymalny rozmiar tablicy" << endl 
+             << "Program przypisze maksymalna wartosc wcisnij [enter]"
+             << endl;
     }
     return new A[podany_n];
 }
+void obsługa_zapisu(int k){
+    switch (k)
+        {
+        case 1:
+            separator = '\t';
+            break;
+        case 2:
+            separator = ',';
+            break;
+        case 3:
+            separator = ';';
+            break;
+        case 4:
+            separator = ' ';
+            break;
+        default:
+            separator = '\n';
+            brak_kolumn = true;
+            break;
+        }
+}
+
 int main()
 {
     bool Active = true;
@@ -70,9 +95,9 @@ int main()
             getline(cin, nazwa);
         } while (!wczytaj_plik(nazwa));
     }
-    int n=20;
+    int n;
     cout << "Podaj liczbe: " << endl;
-    //cin >> n;
+    cin >> n;
     ClearScreen();
     A* tablica;
     try {
@@ -114,17 +139,41 @@ int main()
     A::przedstaw();
     cout << "Zapis do pliku [t/n] ";
     cin.ignore();
-    char znak ='t';//= cin.get();
+    char znak = cin.get();
     if (znak == 't') {
-        cout << "Zapisuje" << endl;
+        cout << "Zapisuje ";
         int i =0;
-        while(i != n){
-            cout << endl;
-            for(int j=0;j<5;j++){
-                cout << tablica[i].getliczba() << " ";
-                i++;
+        int wybor;
+        char separator;
+        cin >> wybor;
+        bool brak_kolumn = false;
+        // dodac instrukcje
+
+        
+        cout << endl;
+        if (brak_kolumn == true){
+            for (int i = 0; i < n; i++)
+            {
+                cout << tablica[i].getliczba() << '\n' ;
             }
-        }     
+            
+        }
+        else
+        {
+        cout << "Podaj liczbe kolumn : ";
+        int liczba_kolumn;
+        cin >> liczba_kolumn; 
+        for(i=1; i<=n; i++){
+            if(((i)%liczba_kolumn == 0) || (i==n))
+            cout << tablica[i-1].getliczba() << endl;
+            else
+            {
+                cout << tablica[i-1].getliczba() << separator;
+            }
+        }
+        }
+        
+        
     }
     delete[] tablica;
     }
