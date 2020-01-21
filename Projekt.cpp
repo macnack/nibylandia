@@ -25,7 +25,7 @@ public:
     {
         cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
              << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
-        //cout << "Suma wynosi: " << A::suma << endl;
+        cout << "Suma wynosi: " << A::suma << endl;
     }
     static int getRozmiar()
     {
@@ -55,7 +55,7 @@ A* stworz_tab(int& podany_n)
     if (podany_n > 1000) {
         podany_n = 1000;
         cout << "Przekroczono maksymalny rozmiar tablicy" << endl
-             << "Program sam przypisze maksymalna wartosc"<< endl
+             << "Program sam przypisze maksymalna wartosc" << endl
              << endl;
     }
     return new A[podany_n];
@@ -124,34 +124,39 @@ int main()
     }
     if (Active == true) {
         A* aktualny_rekord;
-        int x = A::getRozmiar();
         aktualny_rekord = &tablica[0];
         while (!plik.eof()) {
             string tmp;
             char* pch;
-            //int x = A::getRozmiar();
+            int zakoncz = A::getRozmiar();
             getline(plik, tmp);
             char str[tmp.size() + 1];
             strcpy(str, tmp.c_str());
             pch = strtok(str, "\t,; \n");
-            if (x != n) {
+            if (zakoncz != n) {
                 while (pch != NULL) {
                     aktualny_rekord->wczytaj_liczba(pch);
-                    //cout << aktualny_rekord->getliczba() << endl;
+                    cout << aktualny_rekord->getliczba() << endl;
                     aktualny_rekord++;
                     //tablica[x].wczytaj_liczba(pch);
                     //cout << tablica[x].getliczba() << endl;
                     pch = strtok(NULL, "\t,; \n");
-                    if (x == n) {
-                        plik.close();
+                    if (zakoncz == n) {
                         break;
                     };
                 }
             }
         }
+        int x = A::getRozmiar();
+        if (x < n) {
+            cout << "Do oczekiwanego rozmiaru tablicy brakowalo: "
+                 << n - x << " liczb w pliku" << endl
+                 << "Oto statystyki z " << x << " liczb." << endl
+                 << endl;
+        }
         A::przedstaw();
         cout << "Tutaj";
-        cout <<'\n' <<  A::getRozmiar() << "###" << n; 
+        cout << '\n' << A::getRozmiar() << "###" << n;
         cout << "Zapis do pliku [t/n] ";
         cin.ignore();
         char znak = cin.get();
@@ -160,7 +165,7 @@ int main()
             obsluga_zapisu(separator);
             cout << endl;
             if (separator == '\n') {
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < x; i++) {
                     cout << tablica[i].getliczba() << '\n';
                 }
             }
@@ -174,8 +179,8 @@ int main()
                     }
                 }
                 else {
-                    for (int i = 1; i <= n; i++) {
-                        if (((i) % liczba_kolumn == 0) || (i == n))
+                    for (int i = 1; i <= x; i++) {
+                        if (((i) % liczba_kolumn == 0) || (i == x))
                             cout << tablica[i - 1].getliczba() << endl;
                         else {
                             cout << tablica[i - 1].getliczba() << separator;
@@ -188,5 +193,7 @@ int main()
     }
     cout << endl;
     cout << "Koniec programu." << endl;
+    plik.close();
+
     return 0;
 }
