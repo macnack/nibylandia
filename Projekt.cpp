@@ -13,7 +13,8 @@ class A {
 public:
     double getliczba() { return liczba; }
     A() { ; }
-    void wczytaj_liczba(char* zmienna){
+    void wczytaj_liczba(char* zmienna)
+    {
         liczba = stod(zmienna);
         A::suma += liczba;
         A::rozmiar++;
@@ -49,35 +50,47 @@ void ClearScreen()
 {
     cout << string(100, '\n');
 }
-A* stworz_tab(int &podany_n){
-    if(podany_n>1000){
+A* stworz_tab(int& podany_n)
+{
+    if (podany_n > 1000) {
         podany_n = 1000;
-        cout << "Przekroczono maksymalny rozmiar tablicy" << endl 
-             << "Program przypisze maksymalna wartosc wcisnij [enter]"
+        cout << "Przekroczono maksymalny rozmiar tablicy" << endl
+             << "Program sam przypisze maksymalna wartosc"<< endl
              << endl;
     }
     return new A[podany_n];
 }
-void obsługa_zapisu(int k){
-    switch (k)
-        {
-        case 1:
-            separator = '\t';
-            break;
-        case 2:
-            separator = ',';
-            break;
-        case 3:
-            separator = ';';
-            break;
-        case 4:
-            separator = ' ';
-            break;
-        default:
-            separator = '\n';
-            brak_kolumn = true;
-            break;
-        }
+void obsluga_zapisu(char& separator)
+{
+    cout << "Zapis mozna dokonać za pomocą nowego separatora," << endl
+         << "program zapisuje liczby ktore zostaly pobrane wczesniej" << endl
+         << "[1] - separator tabulator " << endl
+         << "[2] - separator przecinek " << endl
+         << "[3] - separator srednik " << endl
+         << "[4] - separator spacja " << endl
+         << "[5] - separator znaku nowej linii" << endl;
+    char c_wybor[3];
+    do {
+        cin >> c_wybor;
+    } while (!isdigit(c_wybor[0]));
+    int wybor = c_wybor[0] - 48;
+    switch (wybor) {
+    case 1:
+        separator = '\t';
+        break;
+    case 2:
+        separator = ',';
+        break;
+    case 3:
+        separator = ';';
+        break;
+    case 4:
+        separator = ' ';
+        break;
+    case 5:
+        separator = '\n';
+        break;
+    }
 }
 
 int main()
@@ -109,74 +122,71 @@ int main()
              << "Error: " << e.what() << endl;
         Active = false;
     }
-    if(Active == true){
-    A *aktualny_rekord;
-    aktualny_rekord = &tablica[0];
-    while (!plik.eof()) {
-        string tmp;
-        char* pch;
+    if (Active == true) {
+        A* aktualny_rekord;
         int x = A::getRozmiar();
-        getline(plik, tmp);
-        char str[tmp.size() + 1];
-        strcpy(str, tmp.c_str());
-        pch = strtok(str, "\t,; \n");
-        if (x != n) {
-            while (pch != NULL) {
-                aktualny_rekord->wczytaj_liczba(pch);
-                cout << aktualny_rekord->getliczba() << endl;
-                aktualny_rekord++;
-                //tablica[x].wczytaj_liczba(pch);
-                //cout << tablica[x].getliczba() << endl;
-                pch = strtok(NULL, "\t,; \n");
-                if (x == n) {
-                    plik.close();
-                    break;
-                };
+        aktualny_rekord = &tablica[0];
+        while (!plik.eof()) {
+            string tmp;
+            char* pch;
+            //int x = A::getRozmiar();
+            getline(plik, tmp);
+            char str[tmp.size() + 1];
+            strcpy(str, tmp.c_str());
+            pch = strtok(str, "\t,; \n");
+            if (x != n) {
+                while (pch != NULL) {
+                    aktualny_rekord->wczytaj_liczba(pch);
+                    //cout << aktualny_rekord->getliczba() << endl;
+                    aktualny_rekord++;
+                    //tablica[x].wczytaj_liczba(pch);
+                    //cout << tablica[x].getliczba() << endl;
+                    pch = strtok(NULL, "\t,; \n");
+                    if (x == n) {
+                        plik.close();
+                        break;
+                    };
+                }
             }
         }
-
-    }
-    A::przedstaw();
-    cout << "Zapis do pliku [t/n] ";
-    cin.ignore();
-    char znak = cin.get();
-    if (znak == 't') {
-        cout << "Zapisuje ";
-        int i =0;
-        int wybor;
-        char separator;
-        cin >> wybor;
-        bool brak_kolumn = false;
-        // dodac instrukcje
-
-        
-        cout << endl;
-        if (brak_kolumn == true){
-            for (int i = 0; i < n; i++)
-            {
-                cout << tablica[i].getliczba() << '\n' ;
+        A::przedstaw();
+        cout << "Tutaj";
+        cout <<'\n' <<  A::getRozmiar() << "###" << n; 
+        cout << "Zapis do pliku [t/n] ";
+        cin.ignore();
+        char znak = cin.get();
+        if (znak == 't') {
+            char separator;
+            obsluga_zapisu(separator);
+            cout << endl;
+            if (separator == '\n') {
+                for (int i = 0; i < n; i++) {
+                    cout << tablica[i].getliczba() << '\n';
+                }
             }
-            
-        }
-        else
-        {
-        cout << "Podaj liczbe kolumn : ";
-        int liczba_kolumn;
-        cin >> liczba_kolumn; 
-        for(i=1; i<=n; i++){
-            if(((i)%liczba_kolumn == 0) || (i==n))
-            cout << tablica[i-1].getliczba() << endl;
-            else
-            {
-                cout << tablica[i-1].getliczba() << separator;
+            else {
+                cout << "Podaj liczbe kolumn : ";
+                int liczba_kolumn;
+                cin >> liczba_kolumn;
+                if (liczba_kolumn == 0) {
+                    for (int i = 0; i < x; i++) {
+                        cout << tablica[i].getliczba() << separator;
+                    }
+                }
+                else {
+                    for (int i = 1; i <= n; i++) {
+                        if (((i) % liczba_kolumn == 0) || (i == n))
+                            cout << tablica[i - 1].getliczba() << endl;
+                        else {
+                            cout << tablica[i - 1].getliczba() << separator;
+                        }
+                    }
+                }
             }
         }
-        }
-        
-        
+        delete[] tablica;
     }
-    delete[] tablica;
-    }
+    cout << endl;
     cout << "Koniec programu." << endl;
     return 0;
 }
