@@ -31,6 +31,7 @@ public:
     {
         return rozmiar;
     }
+    //friend void zapis(A obiekt);
 };
 
 double A::suma;
@@ -63,7 +64,7 @@ A* stworz_tab(int& podany_n)
 void obsluga_zapisu(char& separator)
 {
     cout << "Zapis mozna dokonać za pomocą nowego separatora," << endl
-         << "program zapisuje liczby ktore zostaly pobrane wczesniej" << endl
+         << "program zapisuje liczby ktore zostaly wczytane " << endl
          << "[1] - separator tabulator " << endl
          << "[2] - separator przecinek " << endl
          << "[3] - separator srednik " << endl
@@ -72,7 +73,7 @@ void obsluga_zapisu(char& separator)
     char c_wybor[3];
     do {
         cin >> c_wybor;
-    } while (!isdigit(c_wybor[0]));
+    } while (!isdigit(c_wybor[0])); //i jest wieksze od zera dodac
     int wybor = c_wybor[0] - 48;
     switch (wybor) {
     case 1:
@@ -92,6 +93,52 @@ void obsluga_zapisu(char& separator)
         break;
     }
 }
+void zapis(A* obiekt)
+{
+    char znak;
+    int rozmiar = A::getRozmiar();
+    do {
+        cout << "Zapis do pliku [t/n] ";
+        cin.ignore();
+        znak = cin.get();
+        if (znak == 't') {
+            ofstream zapis("nowy_plik.txt", ios::app);
+            char separator;
+            obsluga_zapisu(separator);
+            cout << endl;
+            if (separator == '\n') {
+                for (int i = 0; i < rozmiar; i++) {
+                    zapis << obiekt->getliczba() << '\n';
+                    obiekt++;
+                }
+            }
+            else {
+                cout << "Podaj liczbe kolumn : ";
+                int liczba_kolumn;
+                cin >> liczba_kolumn;
+                if (liczba_kolumn == 0) {
+                    for (int i = 0; i < rozmiar; i++) {
+                        zapis << obiekt->getliczba() << separator;
+                        obiekt++;
+                    }
+                }
+                else {
+                    for (int i = 1; i <= rozmiar; i++) {
+                        if (((i) % liczba_kolumn == 0) || (i == rozmiar))
+                            zapis << obiekt->getliczba() << endl;
+                        else {
+                            zapis << obiekt->getliczba() << separator;
+                        }
+                        obiekt++;
+                    }
+                }
+            }
+            zapis.close();
+            break;
+        }
+
+    } while (znak != 'n');
+}
 
 int main()
 {
@@ -99,7 +146,7 @@ int main()
     string nazwa = "xyz.txt";
     cout << "Witaj uzytkowniku! " << endl
          << "Podaj nazwe pliku: " << endl;
-    //getline(cin, nazwa);
+    getline(cin, nazwa);
     if (!wczytaj_plik(nazwa)) {
         do {
             cout << endl
@@ -125,6 +172,7 @@ int main()
     if (Active == true) {
         A* aktualny_rekord;
         aktualny_rekord = &tablica[0];
+        int stop =0;
         while (!plik.eof()) {
             string tmp;
             char* pch;
@@ -133,15 +181,17 @@ int main()
             char str[tmp.size() + 1];
             strcpy(str, tmp.c_str());
             pch = strtok(str, "\t,; \n");
-            if (zakoncz != n) {
+            if (stop != n) {
                 while (pch != NULL) {
                     aktualny_rekord->wczytaj_liczba(pch);
-                    cout << aktualny_rekord->getliczba() << endl;
+                    //cout << aktualny_rekord->getliczba() << endl;
                     aktualny_rekord++;
                     //tablica[x].wczytaj_liczba(pch);
                     //cout << tablica[x].getliczba() << endl;
                     pch = strtok(NULL, "\t,; \n");
-                    if (zakoncz == n) {
+                    stop++;
+                    if (stop == n) {
+                        plik.close();
                         break;
                     };
                 }
@@ -154,46 +204,14 @@ int main()
                  << "Oto statystyki z " << x << " liczb." << endl
                  << endl;
         }
+        cout << "tutaj " << x << "   " << n;
         A::przedstaw();
-        cout << "Tutaj";
-        cout << '\n' << A::getRozmiar() << "###" << n;
-        cout << "Zapis do pliku [t/n] ";
-        cin.ignore();
-        char znak = cin.get();
-        if (znak == 't') {
-            char separator;
-            obsluga_zapisu(separator);
-            cout << endl;
-            if (separator == '\n') {
-                for (int i = 0; i < x; i++) {
-                    cout << tablica[i].getliczba() << '\n';
-                }
-            }
-            else {
-                cout << "Podaj liczbe kolumn : ";
-                int liczba_kolumn;
-                cin >> liczba_kolumn;
-                if (liczba_kolumn == 0) {
-                    for (int i = 0; i < x; i++) {
-                        cout << tablica[i].getliczba() << separator;
-                    }
-                }
-                else {
-                    for (int i = 1; i <= x; i++) {
-                        if (((i) % liczba_kolumn == 0) || (i == x))
-                            cout << tablica[i - 1].getliczba() << endl;
-                        else {
-                            cout << tablica[i - 1].getliczba() << separator;
-                        }
-                    }
-                }
-            }
-        }
+        aktualny_rekord = &tablica[0];
+        zapis(aktualny_rekord);
         delete[] tablica;
     }
     cout << endl;
-    cout << "Koniec programu." << endl;
-    plik.close();
+    cout << "Zamkniecie pliku." << endl;
 
     return 0;
 }
