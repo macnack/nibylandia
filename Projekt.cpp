@@ -11,7 +11,6 @@ class A {
     static int rozmiar;
 
 public:
-    double getliczba() { return liczba; }
     A() { ; }
     void wczytaj_liczba(char* zmienna)
     {
@@ -31,7 +30,7 @@ public:
     {
         return rozmiar;
     }
-    friend void zapis(A *obiekt);
+    friend void zapis(A* obiekt);
 };
 
 double A::suma;
@@ -73,7 +72,7 @@ void obsluga_zapisu(char& separator)
     char c_wybor[3];
     do {
         cin >> c_wybor;
-    } while (!isdigit(c_wybor[0])); //i jest wieksze od zera dodac
+    } while (!isdigit(c_wybor[0]));
     int wybor = c_wybor[0] - 48;
     switch (wybor) {
     case 1:
@@ -91,8 +90,6 @@ void obsluga_zapisu(char& separator)
     case 5:
         separator = '\n';
         break;
-    case 6:
-        break;
     }
 }
 void zapis(A* obiekt)
@@ -109,7 +106,7 @@ void zapis(A* obiekt)
             cout << endl;
             if (separator == '\n') {
                 for (int i = 0; i < rozmiar; i++) {
-                    zapis << obiekt->getliczba() << '\n';
+                    zapis << obiekt->liczba << '\n';
                     obiekt++;
                 }
             }
@@ -119,16 +116,16 @@ void zapis(A* obiekt)
                 cin >> liczba_kolumn;
                 if (liczba_kolumn == 0) {
                     for (int i = 0; i < rozmiar; i++) {
-                        zapis << obiekt->getliczba() << separator;
+                        zapis << obiekt->liczba << separator;
                         obiekt++;
-                    }}
-                else if ( separator == 'x'){ zapis << "Anulowano zapis";}
+                    }
+                }
                 else {
                     for (int i = 1; i <= rozmiar; i++) {
                         if (((i) % liczba_kolumn == 0) || (i == rozmiar))
-                            zapis << obiekt->getliczba() << endl;
+                            zapis << obiekt->liczba << endl;
                         else {
-                            zapis << obiekt->getliczba() << separator;
+                            zapis << obiekt->liczba << separator;
                         }
                         obiekt++;
                     }
@@ -157,16 +154,25 @@ int main()
         } while (!wczytaj_plik(nazwa));
     }
     string str_numer;
-    do
-    {
-        cout << "Podaj liczbe: " ;
-        getline(cin,str_numer);
-        for(int i =0; i< str_numer.size(); i++){
-            if (str_numer[0]== '-'){
-                if (isdigit(str_numer[i+1])){Active = false;}}
-            else{
-                if(isdigit(str_numer[i])){Active = false;}
-                else{ cout << "Liczba musi byc z zakresu [1,1000]" << endl; break;}}}
+    do {
+        cout << "Podaj liczbe z zakresu [0,1000]: ";
+        getline(cin, str_numer);
+        for (int i = 0; i < str_numer.size(); i++) {
+            if (str_numer[0] == '-') {
+                if (isdigit(str_numer[i + 1])) {
+                    Active = false;
+                }
+            }
+            else {
+                if (isdigit(str_numer[i])) {
+                    Active = false;
+                }
+                else {
+                    cout << "Liczba musi byc z zakresu [1,1000]" << endl;
+                    break;
+                }
+            }
+        }
     } while (Active);
     Active = true;
     int n = atoi(str_numer.c_str());
@@ -184,7 +190,7 @@ int main()
     if (Active == true) {
         A* aktualny_rekord;
         aktualny_rekord = &tablica[0];
-        int stop =0;
+        int stop = 0;
         while (!plik.eof()) {
             string tmp;
             char* pch;
@@ -196,8 +202,7 @@ int main()
             if (stop != n) {
                 while (pch != NULL) {
                     aktualny_rekord->wczytaj_liczba(pch);
-                    //cout << aktualny_rekord->getliczba() << endl;
-                    aktualny_rekord++;;
+                    aktualny_rekord++;
                     pch = strtok(NULL, "\t,; \n");
                     stop++;
                     if (stop == n) {
@@ -214,7 +219,6 @@ int main()
                  << "Oto statystyki z " << x << " liczb." << endl
                  << endl;
         }
-        cout << "tutaj " << x << " z " << n << endl;
         A::przedstaw();
         aktualny_rekord = &tablica[0];
         zapis(aktualny_rekord);
