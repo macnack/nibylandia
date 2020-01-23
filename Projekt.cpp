@@ -25,13 +25,13 @@ public:
     {
         cout << "Wartosc maksymalna w tablicy wynosi: " << A::max << endl
              << "Srednia wynosi: " << A::suma / A::rozmiar << endl;
-        cout << "Suma wynosi: " << A::suma << endl;
+        //cout << "Suma wynosi: " << A::suma << endl;
     }
     static int getRozmiar()
     {
         return rozmiar;
     }
-    //friend void zapis(A obiekt);
+    friend void zapis(A *obiekt);
 };
 
 double A::suma;
@@ -91,6 +91,8 @@ void obsluga_zapisu(char& separator)
     case 5:
         separator = '\n';
         break;
+    case 6:
+        break;
     }
 }
 void zapis(A* obiekt)
@@ -99,7 +101,6 @@ void zapis(A* obiekt)
     int rozmiar = A::getRozmiar();
     do {
         cout << "Zapis do pliku [t/n] ";
-        cin.ignore();
         znak = cin.get();
         if (znak == 't') {
             ofstream zapis("nowy_plik.txt", ios::app);
@@ -120,8 +121,8 @@ void zapis(A* obiekt)
                     for (int i = 0; i < rozmiar; i++) {
                         zapis << obiekt->getliczba() << separator;
                         obiekt++;
-                    }
-                }
+                    }}
+                else if ( separator == 'x'){ zapis << "Anulowano zapis";}
                 else {
                     for (int i = 1; i <= rozmiar; i++) {
                         if (((i) % liczba_kolumn == 0) || (i == rozmiar))
@@ -155,9 +156,20 @@ int main()
             getline(cin, nazwa);
         } while (!wczytaj_plik(nazwa));
     }
-    int n;
-    cout << "Podaj liczbe: " << endl;
-    cin >> n;
+    string str_numer;
+    do
+    {
+        cout << "Podaj liczbe: " ;
+        getline(cin,str_numer);
+        for(int i =0; i< str_numer.size(); i++){
+            if (str_numer[0]== '-'){
+                if (isdigit(str_numer[i+1])){Active = false;}}
+            else{
+                if(isdigit(str_numer[i])){Active = false;}
+                else{ cout << "Liczba musi byc z zakresu [1,1000]" << endl; break;}}}
+    } while (Active);
+    Active = true;
+    int n = atoi(str_numer.c_str());
     ClearScreen();
     A* tablica;
     try {
@@ -185,9 +197,7 @@ int main()
                 while (pch != NULL) {
                     aktualny_rekord->wczytaj_liczba(pch);
                     //cout << aktualny_rekord->getliczba() << endl;
-                    aktualny_rekord++;
-                    //tablica[x].wczytaj_liczba(pch);
-                    //cout << tablica[x].getliczba() << endl;
+                    aktualny_rekord++;;
                     pch = strtok(NULL, "\t,; \n");
                     stop++;
                     if (stop == n) {
@@ -204,7 +214,7 @@ int main()
                  << "Oto statystyki z " << x << " liczb." << endl
                  << endl;
         }
-        cout << "tutaj " << x << "   " << n;
+        cout << "tutaj " << x << " z " << n << endl;
         A::przedstaw();
         aktualny_rekord = &tablica[0];
         zapis(aktualny_rekord);
@@ -212,6 +222,5 @@ int main()
     }
     cout << endl;
     cout << "Zamkniecie pliku." << endl;
-
     return 0;
 }
