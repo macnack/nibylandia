@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <cctype>
-
+/*(const std::string &input)*/
 bool is_palindrome(std::string slowo){
     char tmp[slowo.size()];
     strcpy(tmp,slowo.c_str());
