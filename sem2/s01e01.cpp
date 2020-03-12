@@ -1,13 +1,17 @@
 #include <iostream>
 #include <vector>
 
-void fill_progressive(std::vector<int> &vec){
-    for(unsigned int i =0; i < vec.size(); i++){
+void fill_progressive(std::vector<int> &vec)
+{
+    for (unsigned int i = 0; i < vec.size(); i++)
+    {
         vec[i] = i + 1;
     }
 }
-void print_vector(std::vector<int> &vec){
-    for(unsigned int i =0; i < vec.size(); i++){
+void print_vector(std::vector<int> &vec)
+{
+    for (unsigned int i = 0; i < vec.size(); i++)
+    {
         std::cout << vec[i] << ", ";
     }
 }

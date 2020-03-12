@@ -1,5 +1,4 @@
 #include <iostream>
-//lols
 using namespace std;
 
 class Zwierze
@@ -13,121 +12,122 @@ public:
     void patrz();
     void oddychaj();
     void zyj();
-    string getZwierze() { return zwierze;}
+    string getZwierze() { return zwierze; }
 };
 
-class Ryba: public Zwierze
+class Ryba : public Zwierze
 {
     string klasa = "Ryba";
-    public:
+
+public:
     Ryba();
     void Plywaj();
-    string getKlasa() { return klasa;}
-
+    string getKlasa() { return klasa; }
 };
 
-class Ssak: public Zwierze
+class Ssak : public Zwierze
 {
     string klasa = "Ssak ";
-    public:
+
+public:
     Ssak();
     void Plywaj();
-    string getKlasa() { return klasa;}
-
+    string getKlasa() { return klasa; }
 };
 
-class Ptak: public Zwierze
+class Ptak : public Zwierze
 {
     string klasa = "Ptak ";
-    public:
+
+public:
     Ptak();
     void Lataj();
-    string getKlasa(){return klasa;}
-
+    string getKlasa() { return klasa; }
 };
-
-
 
 class Welonek : public Ryba
 {
-    string gatunek = "Welonek " ; 
+    string gatunek = "Welonek ";
+
 public:
     Welonek(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Nemo : public Ryba
 {
-    string gatunek = "Nemo "; 
+    string gatunek = "Nemo ";
+
 public:
     Nemo(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Karp : public Ryba
 {
     string gatunek = "Karp ";
+
 public:
     Karp(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
-    
+    string getGatunek() { return gatunek; }
 };
-
-
 
 class Pies : public Ssak
 {
     string gatunek = "Pies ";
+
 public:
     Pies(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Lew : public Ssak
 {
     string gatunek = "Lew ";
+
 public:
     Lew(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Slon : public Ssak
 {
     string gatunek = "Slon ";
+
 public:
     Slon(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
-
-
 
 class Kanarek : public Ptak
 {
     string gatunek = "Kanarek ";
+
 public:
     Kanarek(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Golob : public Ptak
 {
     string gatunek = "Golob ";
+
 public:
     Golob(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
 class Papuga : public Ptak
 {
     string gatunek = "Papuga ";
+
 public:
     Papuga(string n);
     void Przedstaw();
-    string getGatunek() {return gatunek;}
+    string getGatunek() { return gatunek; }
 };
-
 
 Zwierze::Zwierze()
 {
@@ -199,58 +199,69 @@ Golob::Golob(string n)
     cout << "Stworzono Golob" << endl;
     cout << Golob::imie << endl;
 }
-void Welonek::Przedstaw(){
+void Welonek::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Nemo::Przedstaw(){
+void Nemo::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Karp::Przedstaw(){
+void Karp::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Lew::Przedstaw(){
+void Lew::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Slon::Przedstaw(){
+void Slon::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Pies::Przedstaw(){
+void Pies::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Kanarek::Przedstaw(){
+void Kanarek::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Papuga::Przedstaw(){
+void Papuga::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
-void Golob::Przedstaw(){
+void Golob::Przedstaw()
+{
     cout << "Jestem " << getGatunek() << imie << endl;
-    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy " 
+    cout << "Jestem elementem klasy " << getGatunek() << "dziedziczacym z klasy "
          << getKlasa() << "ktora dziedziczyla z klasy " << getZwierze() << endl;
 }
 
-void Zwierze::zyj(){
+void Zwierze::zyj()
+{
 
     cout << "Zyje i mam sie dobrze." << endl;
 }
-int main(){
-    Pies *Azor = new Pies( "Azor");
+int main()
+{
+    Pies *Azor = new Pies("Azor");
     Azor->Przedstaw();
     Azor->zyj();
     delete Azor;

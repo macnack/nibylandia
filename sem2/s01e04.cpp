@@ -1,13 +1,17 @@
 #include <iostream>
 #include <vector>
 
-uint64_t factorial_r(int x){
+uint64_t factorial_r(int x)
+{
     uint64_t silnia;
-    for(int i = 0; i<=x; i++){
-        if(i == 0){
+    for (int i = 0; i <= x; i++)
+    {
+        if (i == 0)
+        {
             silnia = 1;
         }
-        else {
+        else
+        {
             silnia *= i;
         }
     }
