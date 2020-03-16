@@ -37,10 +37,10 @@ std::vector<std::string> split(std::string &zdanie, char znak = ' ')
     tab_found.push_back(zdanie.size() + 1);
     pos = 0;
     std::string tmp;
-    for (std::vector<std::size_t>::iterator it = tab_found.begin(); it != tab_found.end(); it++)
+    for (size_t &it : tab_found)
     {
-        tmp = zdanie.substr(pos, *it - pos);
-        pos = *it + 1;
+        tmp = zdanie.substr(pos, it - pos);
+        pos = it + 1;
         if (tmp != "")
             string.push_back(tmp);
     }
