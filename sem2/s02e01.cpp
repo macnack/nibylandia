@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
 #include <cctype>
-/*(const std::string &input)*/
-bool is_palindrome(std::string slowo)
+
+bool is_palindrome(const std::string &slowo)
 {
     char tmp[slowo.size()];
     strcpy(tmp, slowo.c_str());
@@ -17,7 +17,7 @@ bool is_palindrome(std::string slowo)
     }
     return false;
 }
-bool is_palindrome1(std::string slowo)
+bool is_palindrome_sentence(const std::string &slowo)
 {
     char c_slowo[slowo.size()];
     strcpy(c_slowo, slowo.c_str());
@@ -55,7 +55,7 @@ int main()
         std::cout << "Nope" << std::endl;
     }
     std::string sentence = "Never odd or even";
-    if (is_palindrome1(sentence))
+    if (is_palindrome_sentence(sentence))
     {
         std::cout << "To palindrom!" << std::endl;
     }

@@ -16,7 +16,7 @@ std::string find_longest_word(std::string slowo)
         }
     }
     int dl;
-    int max;
+    int max = 0;
     int j = 0;
     poczatek.push_back(slowo.size() + 1);
     for (int i = 0; i < poczatek.size() - 1; i++)
@@ -28,15 +28,14 @@ std::string find_longest_word(std::string slowo)
             j = poczatek[i];
         }
     }
-    std::string tmp = slowo.substr(j, max);
+    std::string tmp = slowo.substr(j, dl);
 
     return tmp;
 }
 
 int main()
-{ //0123456789*123456789*123456789*1234
+{ //                     0123456789*123456789*123456789*1234
     std::string input = "Ala ma kota, kot jezdzi na Roombie";
-
     std::string output = find_longest_word(input); // 7
     std::cout << output;
     return 0;

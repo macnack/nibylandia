@@ -20,37 +20,10 @@ void show(std::vector<std::string> &string)
     }
     std::cout << std::endl;
 }
-std::vector<std::string> split(std::string &zdanie)
+std::vector<std::string> split(std::string &zdanie, char znak = ' ')
 {
     std::vector<std::string> string;
-    std::size_t pos = 0, found;
-    std::vector<std::size_t> tab_found;
-    while (found != std::string::npos)
-    {
-        found = zdanie.find(" ", pos);
-        if (found != std::string::npos)
-        {
-            tab_found.push_back(found);
-            pos = found + 1;
-        }
-    }
-    tab_found.push_back(zdanie.size() + 1);
-    pos = 0;
-    std::string tmp;
-    for (std::vector<std::size_t>::iterator it = tab_found.begin(); it != tab_found.end(); it++)
-    {
-        tmp = zdanie.substr(pos, *it - pos);
-        pos = *it + 1;
-        if (tmp != "")
-            string.push_back(tmp);
-    }
-    show(string);
-    return string;
-}
-std::vector<std::string> split(std::string &zdanie, char znak)
-{
-    std::vector<std::string> string;
-    std::size_t pos = 0, found;
+    std::size_t pos = 0, found = 0;
     std::vector<std::size_t> tab_found;
     while (found != std::string::npos)
     {
@@ -71,7 +44,6 @@ std::vector<std::string> split(std::string &zdanie, char znak)
         if (tmp != "")
             string.push_back(tmp);
     }
-    show(string);
     return string;
 }
 
@@ -79,9 +51,12 @@ int main()
 {
     std::string sentence = "Ala ma kota";
     std::vector<std::string> words = split(sentence);
+    show(words);
     // wynik: {"Ala", "ma", "kota"}
     std::string csv = "Mount Everest,8848,1953";
-    std::vector<std::string> data = split(csv, ',');
+    char znak = ',';
+    std::vector<std::string> data = split(csv,znak);
+    show(data);
     // wynik: {"Mount Everest", "8848", "1953"}
 
     return 0;

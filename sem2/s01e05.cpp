@@ -5,15 +5,14 @@
 bool is_prime(int N)
 {
     bool czy_podzielnik = false;
-    for (int i = 2; i < N / 2; i++)
-    {
-        if (N % i == 0)
-        {
+    for (int i = 2; i < sqrt(N)+1 && czy_podzielnik == false; i++) {
+        if (N % i == 0) {
             czy_podzielnik = true;
         }
     }
     return !czy_podzielnik;
 }
+
 void is_prime_number(int od, int zakres)
 {
     for (int i = 2; i <= zakres; i++)
@@ -33,7 +32,7 @@ void is_prime_number(int od, int zakres)
 
 int main()
 {
-    int prime_or_not_prime = 13;
+    int prime_or_not_prime = 9;
     if (is_prime(prime_or_not_prime))
     {
         std::cout << prime_or_not_prime << " is prime!" << std::endl;
