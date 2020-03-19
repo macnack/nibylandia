@@ -33,11 +33,11 @@ std::vector<size_t> find_all(const std::string &string, const char &znak){
             pos = found + 1;
         }
     }
-    show(tab_found);
     return tab_found;
 }
 
 int main(){
     std::string input = "Ala ma kota";
     std::vector<size_t> pos = find_all(input, 'a');
+    show(pos);
 }
