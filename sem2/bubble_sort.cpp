@@ -23,10 +23,9 @@ void sortowanie_bombelkowe(std::vector<int> &vec)
             if (vec[i] > vec[i + 1])
             {
                 std::vector<int> tmp(1);
-                tmp[1] = vec[i];
+                tmp[0] = vec[i];
                 vec[i] = vec[i + 1];
-                vec[i + 1] = tmp[1];
-                show(vec);
+                vec[i + 1] = tmp[0];
                 posortowane = true;
             }
         }
