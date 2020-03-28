@@ -38,4 +38,5 @@ int main()
     std::vector<int> vector = {5, 4, 3, 2, 1, 0};
     show(vector);
     sortowanie_bombelkowe(vector);
+    show(vector);
 }
