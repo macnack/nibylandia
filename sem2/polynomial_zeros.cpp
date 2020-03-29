@@ -8,7 +8,7 @@ std::vector<double> get_poly(int n)
     for (int i = 0; i < n; i++)
     {
         std::cin >> wsp;
-        tmp.push_back(wsp);
+        tmp.emplace_back(wsp);
     }
     return tmp;
 }
@@ -24,7 +24,6 @@ double poly(double x, const std::vector<double> &p)
 }
 double zero_r(double bottom, double top, const std::vector<double> &p)
 {
-    //std::cout << "zero_r(" << bottom << ", " << top << ")" << std::endl;
     double mid = (bottom + top) / 2;
     if (top - bottom < 1e-9)
     {
@@ -82,7 +81,12 @@ int main()
     std::cout << "\npo wpisaniu wspolczynnika zatwierdz wciskajac enter" << std::endl;
     std::vector<double> p = get_poly(n);
     //std::vector<double> p = {-30, 6, 10, 1};
-    std::vector<double> z = zero(-15, 5, p, 0.5);
+    std::cout << "Podaj min: \n";
+    double min=-15, max=5;
+    std::cin >> min;
+    std::cout << "Podaj max: \n";
+    std::cin >> max;
+    std::vector<double> z = zero(min, max, p, 0.5);
     for (double zi : z)
     {
         std::cout << zi << std::endl;
