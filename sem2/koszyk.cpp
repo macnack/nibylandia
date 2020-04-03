@@ -33,12 +33,9 @@ std::ostream &operator<<(std::ostream &out, const Roslina &roslina)
 }
 bool czy_jest_gruszka(const Koszyk &koszyk)
 {
-    auto x = std::find_if(koszyk.begin(), koszyk.end(), [](const Roslina &roslina) { return roslina.nazwa == "gruszka"; });
-    if (x != koszyk.end())
-    {
-        return true;
-    }
-    return false;
+    auto x = std::find_if(koszyk.begin(), koszyk.end(), 
+                            [](const Roslina &roslina) { return roslina.nazwa == "gruszka"; });
+    return x != koszyk.end();
 }
 bool czy_same_owoce(const Koszyk &koszyk)
 {
