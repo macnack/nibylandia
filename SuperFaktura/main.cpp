@@ -65,11 +65,12 @@ void Invoice::add_item(Item it)
 {
     items.push_back(it);
 }
-std::ostream &operator<<(std::ostream &out, const std::vector<Item> items){
-    for(unsigned int i =0 ; i < items.size(); i++){
+std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
+{
+    for (unsigned int i = 0; i < items.size(); i++)
+    {
         
     }
-
 
     return out;
 }
@@ -84,7 +85,6 @@ std::ostream &operator<<(std::ostream &out, const Invoice &el)
     out.width(25);
     out << std::right << "Sprzedawca: " + std::to_string(el.w_nip_);
     out << std::endl;
-    for(unsigned int i = 0; i < items.size() ; i++)
     return out;
 }
 
