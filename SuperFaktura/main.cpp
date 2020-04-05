@@ -37,6 +37,12 @@ public:
     friend std::ostream &operator<<(std::ostream &ouy, const std::vector<Item> items);
     friend std::ostream &operator<<(std::ostream &out, const Invoice &el);
 };
+inline double round( double val )
+{
+    if( val < 0 ) return ceil(val - 0.5);
+    return floor(val + 0.5);
+}
+
 void Item::set_stawka(const char &stawka_)
 {
     switch (stawka_)
@@ -71,6 +77,8 @@ void Invoice::add_item(Item it)
 }
 std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
 {
+    double tmp_netto;
+    double tmp_brutto;
     for (unsigned int i = 0; i < items.size(); i++)
     {
         out.width(3);
@@ -88,12 +96,11 @@ std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
         out.width(5);
         out << std::internal << items[i].netto * items[i].il << " |";
         out.width(8);
-        out.precision(3);
-        out << std::internal << (items[i].netto * items[i].il * (items[i].stawka / 100.0 + 1));
+        out << std::setprecision(4);
+        tmp_brutto = items[i].netto * items[i].il * (items[i].stawka / 100.0 + 1);
+        out << std::internal << tmp_brutto;
         out << std::endl;
     }
-    double tmp_brutto;
-    double tmp_netto;
     for (Item et : items)
     {
         tmp_brutto += et.netto * et.il * (et.stawka + 100) / 100;
@@ -104,6 +111,7 @@ std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
     std::string str2 = std::to_string(tmp_netto);
     str1.erase(str1.find_last_not_of('0') + 1, std::string::npos);
     str2.erase(str2.find_last_not_of('0') + 1, std::string::npos);
+    out << std::setfill(' ');
     out << std::setw(49) << std::right << str2 + " | " + str1 << std::endl;
     return out;
 }
@@ -133,12 +141,19 @@ std::ostream &operator<<(std::ostream &out, const Invoice &el)
 
     return out;
 }
-
 int main()
 {
     Invoice inv(7770003699, 1234567890);
     inv.add_item(Item("Sruba M3", 0.37, 'A', 100));
     inv.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 2));
     std::cout << inv << std::endl;
+    Invoice inv2(7770003699, 1234567890);
+    inv2.add_item(Item("Sruba M3", 0.37, 'A', 100));
+    inv2.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 2));
+    std::cout << inv2 << std::endl;
+    double value = 42.08;
+    value = round( value * 100.0 ) / 100.0;
+    std::cout << value << std::endl;
+
     return 0;
 }
