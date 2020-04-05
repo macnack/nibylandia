@@ -77,8 +77,8 @@ void Invoice::add_item(Item it)
 }
 std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
 {
-    double tmp_netto;
     double tmp_brutto;
+    double tmp_netto;
     for (unsigned int i = 0; i < items.size(); i++)
     {
         out.width(3);
@@ -101,6 +101,8 @@ std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
         out << std::internal << tmp_brutto;
         out << std::endl;
     }
+    tmp_brutto = 0;
+    tmp_netto = 0;
     for (Item et : items)
     {
         tmp_brutto += et.netto * et.il * (et.stawka + 100) / 100;
