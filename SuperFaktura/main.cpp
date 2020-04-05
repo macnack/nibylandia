@@ -37,21 +37,18 @@ public:
     long nabywca()const;
     Invoice();
     Invoice(long w_nip, long n_nip);
-    bool add(const Invoice &r1);
-    bool add_item(const std::vector<Item> &other_items);
+    bool add(const Invoice &other);
+    bool add_items(const std::vector<Item> other_items);
     //Invoice operator+(const Invoice &r1);
     friend std::ostream &operator<<(std::ostream &out, const std::vector<Item> items);
     friend std::ostream &operator<<(std::ostream &out, const Invoice &el); 
 };
+
 bool Invoice::add(const Invoice &other){
     if( (sprzedawca() == other.sprzedawca())&&(nabywca() == other.nabywca()) ){
-        return true;
-    }
-    return false;
-}
-bool Invoice::add_item(const std::vector<Item> &other_items){
-    for( Item ot : other_items){
-
+        std::vector<Item> o_items = other.items;
+        //const std::vector<Item>::iterator it;
+        auto =std::copy_if(o_items.)
         return true;
     }
     return false;
@@ -174,9 +171,10 @@ int main()
     inv.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 2));
     std::cout << inv << std::endl;
     Invoice inv2(7770003699, 1234567890);
-    inv2.add_item(Item("Sruba M3", 0.37, 'A', 100));
-    inv2.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 2));
-    std::cout << inv2 << std::endl;
+    inv2.add_item(Item("Sruba M3", 0.37, 'A', 250));
+    inv2.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 10));
+    inv.add(inv2);
+    std::cout << inv << std::endl;
     
     return 0;
 }
