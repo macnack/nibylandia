@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include <cmath>
 
 enum Vat
 {
@@ -18,8 +19,10 @@ private:
     int il;
 
 public:
-    void set_stawka(const char &stawka_b);
+    void
+    set_stawka(const char &stawka_b);
     Item(std::string arg_nazwa, double arg_netto, char arg_stawka, int arg_il);
+    friend std::ostream &operator<<(std::ostream &ouy, const std::vector<Item> items);
 };
 class Invoice
 {
@@ -53,7 +56,8 @@ Item::Item(std::string arg_nazwa, double arg_netto, char arg_stawka, int arg_il)
 {
     nazwa = arg_nazwa;
     netto = arg_netto;
-    set_stawka(arg_stawka);
+    stawka_ = arg_stawka;
+    set_stawka(stawka_);
     il = arg_il;
 }
 Invoice::Invoice(long w_nip, long n_nip)
@@ -69,22 +73,64 @@ std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
 {
     for (unsigned int i = 0; i < items.size(); i++)
     {
-        
+        out.width(3);
+        out << std::left << std::to_string(i + 1) + ".";
+        out.width(13);
+        out << std::left << items[i].nazwa;
+        out.width(4);
+        std::string str = std::to_string(items[i].netto);
+        str.erase(str.find_last_not_of('0') + 1, std::string::npos);
+        out << std::internal << "| " + str;
+        out.width(3);
+        out << items[i].stawka_ << " |";
+        out.width(5);
+        out << std::internal << std::to_string(items[i].il) << " |";
+        out.width(5);
+        out << std::internal << items[i].netto * items[i].il << " |";
+        out.width(8);
+        out.precision(3);
+        out << std::internal << (items[i].netto * items[i].il * (items[i].stawka / 100.0 + 1));
+        out << std::endl;
     }
-
+    double tmp_brutto;
+    double tmp_netto;
+    for (Item et : items)
+    {
+        tmp_brutto += et.netto * et.il * (et.stawka + 100) / 100;
+        tmp_netto += et.netto * et.il;
+    }
+    out << std::setfill('-') << std::setw(45) << "RAZEM" << std::setfill('-') << std::setw(5) << "\n";
+    std::string str1 = std::to_string(tmp_brutto);
+    std::string str2 = std::to_string(tmp_netto);
+    str1.erase(str1.find_last_not_of('0') + 1, std::string::npos);
+    str2.erase(str2.find_last_not_of('0') + 1, std::string::npos);
+    out << std::setw(49) << std::right << str2 + " | " + str1 << std::endl;
     return out;
 }
 std::ostream &operator<<(std::ostream &out, const Invoice &el)
 {
-    out << std::setw(25) << "+";
     out << std::string(19, '-') << "FAKTURA VAT" << std::string(19, '-') << std::endl;
     out << std::string(49, '=') << std::endl;
     out << std::endl;
     out.width(24);
-    out << std::left << "Nabywca: " + std::to_string(el.n_nip_);
+    out << std::left << "Sprzedawca: " + std::to_string(el.w_nip_);
     out.width(25);
-    out << std::right << "Sprzedawca: " + std::to_string(el.w_nip_);
+    out << std::right << "Nabywca: " + std::to_string(el.n_nip_);
     out << std::endl;
+    out.width(18);
+    out << "";
+    out.width(7);
+    out << std::left << "c.j. VAT";
+    out.width(6);
+    out << std::internal << "il.";
+    out.width(8);
+    out << std::internal << "netto";
+    out.width(8);
+    out << std::internal << "brutto";
+    out << std::endl;
+    out << el.items;
+    out << std::endl;
+
     return out;
 }
 
@@ -94,7 +140,5 @@ int main()
     inv.add_item(Item("Sruba M3", 0.37, 'A', 100));
     inv.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 2));
     std::cout << inv << std::endl;
-    std::cout << std::left << std::setw(25) << "Column 1" << std::setw(25) << "Column 2" << std::endl;
-    //std::cout.width(name_wid);
     return 0;
 }
