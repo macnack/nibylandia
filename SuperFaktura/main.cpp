@@ -34,28 +34,31 @@ private:
 public:
     void add_item(Item it);
     long sprzedawca() const;
-    long nabywca()const;
+    long nabywca() const;
     Invoice();
     Invoice(long w_nip, long n_nip);
     bool add(const Invoice &other);
     bool add_items(const std::vector<Item> other_items);
     //Invoice operator+(const Invoice &r1);
     friend std::ostream &operator<<(std::ostream &out, const std::vector<Item> items);
-    friend std::ostream &operator<<(std::ostream &out, const Invoice &el); 
+    friend std::ostream &operator<<(std::ostream &out, const Invoice &el);
 };
-
-bool Invoice::add(const Invoice &other){
-    if( (sprzedawca() == other.sprzedawca())&&(nabywca() == other.nabywca()) ){
+bool Invoice::add(const Invoice &other)
+{
+    if ((sprzedawca() == other.sprzedawca()) && (nabywca() == other.nabywca()))
+    {
         std::vector<Item> o_items = other.items;
-        //const std::vector<Item>::iterator it;
-        auto =std::copy_if(o_items.)
+        for (Item &ot : o_items)
+        {
+            items.push_back(ot);
+        }
         return true;
     }
     return false;
 }
 void Item::set_stawka(const char &stawka_)
 {
-    switch (stawka_)    
+    switch (stawka_)
     {
     case 'A':
         stawka = Vat::A;
@@ -68,10 +71,12 @@ void Item::set_stawka(const char &stawka_)
         break;
     }
 }
-long Invoice::sprzedawca()const{
+long Invoice::sprzedawca() const
+{
     return w_nip_;
 }
-long Invoice::nabywca()const{
+long Invoice::nabywca() const
+{
     return n_nip_;
 }
 Item::Item(std::string arg_nazwa, double arg_netto, char arg_stawka, int arg_il)
@@ -175,6 +180,6 @@ int main()
     inv2.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 10));
     inv.add(inv2);
     std::cout << inv << std::endl;
-    
+
     return 0;
 }
