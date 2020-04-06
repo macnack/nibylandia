@@ -4,4 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        SuperFaktura.cpp \
         main.cpp
+
+HEADERS += \
+    SuperFaktura.h

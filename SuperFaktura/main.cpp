@@ -11,6 +11,8 @@ int main()
     inv2.add_item(Item("Wiertlo 2 mm", 2.54, 'B', 10));
     std::cout << inv2 << std::endl;
     inv.add(inv2);
+    Invoice inv3;
+    //inv3 = inv2 + inv;
     std::cout << inv << std::endl;
     return 0;
 }
