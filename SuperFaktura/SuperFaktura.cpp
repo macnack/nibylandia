@@ -46,6 +46,7 @@ Invoice operator+(Invoice &r1, Invoice &r2)
 }
 void Invoice::add_item(Item it)
 {
+
     items.push_back(it);
     std::sort(items.begin(), items.end(), [](Item &r1, Item &r2) { return r1.get_nazwa() < r2.get_nazwa(); });
 }

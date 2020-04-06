@@ -44,7 +44,6 @@ public:
     void add_item(Item it);
     Invoice(long w_nip, long n_nip);
     Invoice(){};
-    Invoice operator+(const Invoice &r1);
     friend std::ostream &operator<<(std::ostream &out, const std::vector<Item> items);
     friend std::ostream &operator<<(std::ostream &out, const Invoice &el);
 };
