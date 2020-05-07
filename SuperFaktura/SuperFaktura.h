@@ -23,17 +23,20 @@ private:
     int il;
 
 public:
-    bool operator<(const Item &r2);
+    //bool operator<(const Item &r2);
+    bool add_il(int ot);
     std::string get_nazwa() { return nazwa; }
+    int get_il() { return il; }
     void set_stawka(const char &stawka_b);
     Item(std::string arg_nazwa, double arg_netto, char arg_stawka, int arg_il);
+    friend class Invoice;
     friend std::ostream &operator<<(std::ostream &out, const std::vector<Item> items);
 };
 class Invoice
 {
 private:
-    long w_nip_;
-    long n_nip_;
+    long sprzedawca_;
+    long nabywca_;
     std::vector<Item> items;
 
 public:

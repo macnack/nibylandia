@@ -1,7 +1,16 @@
 #include "SuperFaktura.h"
-bool Item::operator<(const Item &r2)
+/*bool Item::operator<(const Item &r2)
 {
     return nazwa > r2.nazwa;
+}*/
+bool Item::add_il(int ot)
+{
+    if (ot > 0)
+    {
+        il += ot;
+        return true;
+    }
+    return false;
 }
 void Item::set_stawka(const char &stawka_)
 {
@@ -30,19 +39,28 @@ bool Invoice::add(const Invoice &other)
 {
     if ((sprzedawca() == other.sprzedawca()) && (nabywca() == other.nabywca()))
     {
-        std::vector<Item> o_items = other.items;
+        const std::vector<Item> &o_items = other.items;
         for (Item ot : o_items)
         {
-            items.push_back(ot);
+            auto nazwa = std::find_if(items.begin(), items.end(),
+                                      [ot](const Item &it) { return it.nazwa == ot.nazwa; });
+            auto cena = std::find_if(items.begin(), items.end(),
+                                     [ot](const Item &it) { return it.netto == ot.netto; });
+            auto podatek = std::find_if(items.begin(), items.end(),
+                                        [ot](const Item &it) { return it.stawka_ == ot.stawka_; });
+            if ((nazwa != items.end()) && (cena != items.end()) && (podatek != items.end()))
+            {
+                items[nazwa - items.begin()].add_il(ot.get_il());
+            }
+            else
+            {
+                items.push_back(ot);
+            }
+            std::sort(items.begin(), items.end(), [](Item &r1, Item &r2) { return r1.get_nazwa() < r2.get_nazwa(); });
         }
         return true;
     }
     return false;
-}
-Invoice operator+(Invoice &r1, Invoice &r2)
-{
-    r1.add(r2);
-    return r1;
 }
 void Invoice::add_item(Item it)
 {
@@ -52,16 +70,16 @@ void Invoice::add_item(Item it)
 }
 long Invoice::sprzedawca() const
 {
-    return w_nip_;
+    return sprzedawca_;
 }
 long Invoice::nabywca() const
 {
-    return n_nip_;
+    return nabywca_;
 }
 Invoice::Invoice(long w_nip, long n_nip)
 {
-    w_nip_ = w_nip;
-    n_nip_ = n_nip;
+    sprzedawca_ = w_nip;
+    nabywca_ = n_nip;
 }
 std::ostream &operator<<(std::ostream &out, const std::vector<Item> items)
 {
@@ -116,9 +134,9 @@ std::ostream &operator<<(std::ostream &out, const Invoice &el)
     out << std::string(49, '=') << std::endl;
     out << std::endl;
     out.width(24);
-    out << std::left << "Sprzedawca: " + std::to_string(el.w_nip_);
+    out << std::left << "Sprzedawca: " + std::to_string(el.sprzedawca_);
     out.width(25);
-    out << std::right << "Nabywca: " + std::to_string(el.n_nip_);
+    out << std::right << "Nabywca: " + std::to_string(el.nabywca_);
     out << std::endl;
     out.width(18);
     out << "";
