@@ -81,21 +81,16 @@ void CustomRectangleShape::animate(const sf::Time &elapsed)
 }
 void CustomRectangleShape::selected_mouse(const sf::RenderWindow &window, const sf::Event &event)
 {
-    sf::FloatRect rectangle_bounds = sf::RectangleShape::getGlobalBounds();
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        sf::Vector2i mouse = sf::Mouse::getPosition(window);
-        if ((rectangle_bounds.left < mouse.x && mouse.x < rectangle_bounds.left + rectangle_bounds.width) && (rectangle_bounds.top < mouse.y && mouse.y < rectangle_bounds.top + rectangle_bounds.height))
-        {
-            if (event.mouseButton.button == sf::Mouse::Left)
-            {
-                if (!is_selected)
+    if(event.type == sf::Event::MouseButtonPressed){
+        sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+        if(sf::RectangleShape::getGlobalBounds().contains(mouse_pos.x,mouse_pos.y)){
+            if(event.mouseButton.button == sf::Mouse::Left){
+                if(!is_selected)
                     unselect();
                 else
                     select();
             }
-            if (event.mouseButton.button == sf::Mouse::Right)
-            {
+            if(event.mouseButton.button == sf::Mouse::Right){
                 sf::RectangleShape::setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
             }
         }
