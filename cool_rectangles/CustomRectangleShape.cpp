@@ -25,44 +25,42 @@ void CustomRectangleShape::setBounds(const sf::IntRect &w_size)
 void CustomRectangleShape::move(const sf::Time &elapsed)
 {
     sf::FloatRect rectangle_bounds = sf::RectangleShape::getGlobalBounds();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        if (is_selected)
+    float speed = 500 * elapsed.asSeconds();
+    if(is_selected){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
+
             if (rectangle_bounds.top > oy_)
             {
-                sf::RectangleShape::move(0, -500 * elapsed.asSeconds());
+                sf::RectangleShape::move(0, -speed);
             }
+
         }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        if (is_selected)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
+
             if (rectangle_bounds.top + rectangle_bounds.height < w_y_)
             {
-                sf::RectangleShape::move(0, 500 * elapsed.asSeconds());
+                sf::RectangleShape::move(0, speed);
             }
+
         }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        if (is_selected)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
+
             if (rectangle_bounds.left > ox_)
             {
-                sf::RectangleShape::move(-500 * elapsed.asSeconds(), 0);
+                sf::RectangleShape::move(-speed, 0);
             }
+
         }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        if (is_selected)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
             if (rectangle_bounds.left + rectangle_bounds.width < w_x_)
             {
-                sf::RectangleShape::move(500 * elapsed.asSeconds(), 0);
+                sf::RectangleShape::move(speed, 0);
             }
+
         }
     }
 }
@@ -110,7 +108,7 @@ void CustomRectangleShape::bounce()
     }
     if (rectangle_bounds.top < oy_)
     {
-        speed_y_ = std::abs(speed_x_);
+        speed_y_ = std::abs(speed_y_);
     }
     if (rectangle_bounds.left + rectangle_bounds.width > w_x_ - 1)
     {

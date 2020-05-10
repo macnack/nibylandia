@@ -1,4 +1,5 @@
 #include "CustomRectangleShape.h"
+#include <iostream>
 int main()
 {
     int maxHeight = 600;
@@ -20,6 +21,7 @@ int main()
         rec.setFillColor(sf::Color(124, 124, 124));
         rec.setBounds(0, window.getSize().x, 0, window.getSize().y);
         rec.setSpeed(200, 250, velocity_r += 5);
+
     }
     rectangles[0].unselect();
     while (window.isOpen())
