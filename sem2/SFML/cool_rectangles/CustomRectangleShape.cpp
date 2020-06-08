@@ -29,30 +29,24 @@ void CustomRectangleShape::move(const sf::Time &elapsed)
     if(is_selected){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
-
             if (rectangle_bounds.top > oy_)
             {
                 sf::RectangleShape::move(0, -speed);
             }
-
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
-
             if (rectangle_bounds.top + rectangle_bounds.height < w_y_)
             {
                 sf::RectangleShape::move(0, speed);
             }
-
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-
             if (rectangle_bounds.left > ox_)
             {
                 sf::RectangleShape::move(-speed, 0);
             }
-
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
@@ -60,7 +54,6 @@ void CustomRectangleShape::move(const sf::Time &elapsed)
             {
                 sf::RectangleShape::move(speed, 0);
             }
-
         }
     }
 }
